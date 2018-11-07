@@ -1,40 +1,12 @@
 import React,  {Component} from 'react';
 import Square from './Square/Square'
 
-
-const initSquares = () => {
-    const squares = []; 
-    for(let i=0; i < 9; i++)
-    {
-      let rowIndex = 0;
-      if(i >= 3 && i <= 5)
-        rowIndex = 1;
-      else if(i >= 6)
-        rowIndex = 2;
-      let columnIndex = 0;
-      if(i % 3 === 0)
-        columnIndex = 0;
-      else if((i === 1) || (i === 4) || (i === 7))
-        columnIndex = 1;
-      else if((i === 2) || (i === 5) || (i === 8))
-        columnIndex = 2;
-      squares.push({rowIndex:rowIndex, columnIndex:columnIndex, id:i, value: "", clicked:false});
-    } 
-    return squares;
-  }
-
-    class SquareField extends React.Component {
-        constructor(props) {
-            console.log("SquareField constructor");
-            super(props);
-            this.state = ({
-                squares: initSquares(),
-                players: [{name: "Rainer", active:true, symbol:"X"}, {name: "Lotta", active:false, symbol:"0"}],
-                activePlayer: {name: "Rainer", active:true, symbol:"X"},
-                gameOver: false
-            })
-        }
-
+class SquareField extends React.Component {
+    constructor(props) {
+        console.log("SquareField constructor");
+        super(props);
+        console.log(this.state);
+    }
 
     resetClickedSquares = (squares) => {
         const updatedSquares = squares.map(square => {
