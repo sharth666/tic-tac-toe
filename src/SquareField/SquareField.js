@@ -77,25 +77,14 @@ const initSquares = () => {
     }
 
 
-    initSquareField = () => {
-        console.log("initSquareField");
-        let squareField = [];
-        const squares = this.state.squares;
-
-        squareField = squares.map(square => {
-            return (<Square key={square.id} 
-                    click={this.clickSquareHandler.bind(this, square.id)} 
-                    value={square.value}/>)
-            })
-        console.log(squareField);            
-        return squareField;
-        }
-
-
     render() {
-        {this.initSquareField};
-        return <div></div>
-
+        return (
+           this.state.squares.map(square => {
+                return (<Square key={square.id} 
+                        click={this.clickSquareHandler.bind(this, square.id)} 
+                        value={square.value}/>)
+                })
+        )
     }
 }
 
