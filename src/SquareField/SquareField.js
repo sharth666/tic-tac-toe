@@ -1,12 +1,15 @@
 import React,  {Component} from 'react';
 import Square from './Square/Square'
 
-class SquareField extends React.Component {
-    constructor(props) {
-        console.log("SquareField constructor");
+class SquareField extends React.Component {    
+    constructor(props) {   
         super(props);
-        console.log(this.state);
+        this.state = props.appState;
     }
+
+    componentWillUpdate(nextState, nextProps) {        
+        console.log(nextProps);
+      }
 
     resetClickedSquares = (squares) => {
         const updatedSquares = squares.map(square => {
@@ -18,41 +21,29 @@ class SquareField extends React.Component {
 
 
     clickSquareHandler = (id) => {   
-        let squares = [...this.state.squares];    
-        const players = [...this.state.players];  
+        console.log("click");
+        let squares = [...this.props.appState.squares];     
+            
+        const activePlayer = this.props.appState.activePlayer;
         
         if(squares[id].value === "")
         {
-            squares = this.resetClickedSquares(squares);
-            
-            const activePlayer = players.find((player) => {
-            return player.active === true;       
-            });
-    
-            this.setState({activePlayer:activePlayer});            
-            
+            squares = this.resetClickedSquares(squares);               
             squares[id].value = activePlayer.symbol;
-            squares[id].clicked = true;
-    
-            this.setState({squares:squares});      
-    
-            const updatedPlayers = players.map(player => {
-            if(player.active)
-                player.active = false;
-            else
-                player.active = true;
-            return player;
-            })
-    
-            this.setState({players:updatedPlayers}); 
-        }
+            squares[id].clicked = true;    
+            this.setState({squares:squares, activePlayer: activePlayer}); 
+            this.props.nextPlayer(activePlayer);
+        }       
     }
 
 
     render() {
-        return (
-           this.state.squares.map(square => {
-                return (<Square key={square.id} 
+        console.log("Render squarefield");
+        console.log(this.props.appState.squares);
+        const squares = this.props.appState.squares;
+        return ( 
+            squares.map(square => {
+                return (<Square key={square.id}                       
                         click={this.clickSquareHandler.bind(this, square.id)} 
                         value={square.value}/>)
                 })

@@ -76,19 +76,8 @@ button:active {
   background-color:#fff;
 }
 
-.player_image {
-  margin-left:35px;
-  margin-top:12px;
-  width: 14vw;
-  height: 11vh;
-  /* border:3px solid grey; */
-
+.player {
+  margin:20px;
+  font-size:18pt
 }
-/* .square.draw {
-  stroke-dasharray: 100; 
-  animation: dashdraw 5s linear infinite;
-}
-@keyframes dashdraw {
-  to {stroke-dashoffset: 500}
-} */
 
