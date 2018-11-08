@@ -1,15 +1,18 @@
 import React from 'react';
  import classes from '../../App.module.css';
 
-const PlayerWins = (props) => {
-    if(RowWins(props.squares, props.playerToken))
+const Winner = (props) => {
+    const playerToken = props.appState.previousPlayer.symbol;
+    const squares = props.appState.squares;
+    console.log("Winner: ", playerToken, squares);
+    if(RowWins(squares, playerToken))
     {     
-      return <p className={classes.winmessage}>Player {props.playerToken} wins a row!</p>
+      return <p className={classes.winmessage}>Player {playerToken} wins a row!</p>
     }
-    else if(ColumnWins(props.squares, props.playerToken))
-      return <p className={classes.winmessage}>Player {props.playerToken} wins a column!</p> 
-    else if(DiagonalWins(props.squares, props.playerToken))
-      return <p className={classes.winmessage}>Player {props.playerToken} wins diagonal!</p> 
+    else if(ColumnWins(squares, playerToken))
+      return <p className={classes.winmessage}>Player {playerToken} wins a column!</p> 
+    else if(DiagonalWins(squares, playerToken))
+      return <p className={classes.winmessage}>Player {playerToken} wins diagonal!</p> 
     else
       return <p></p>
 }
@@ -59,4 +62,4 @@ const PlayerWins = (props) => {
       else
     return false;         
   }
-  export default PlayerWins;
+  export default Winner;

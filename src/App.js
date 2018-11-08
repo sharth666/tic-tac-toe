@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classes from './App.module.css';
 import SquareField from "./SquareField/SquareField";
 import Player from "./Players/Player/Player";
-import PlayerWins from "./GameLogic/PlayerWins/PlayerWins";
+import Winner from "./GameLogic/PlayerWins/PlayerWins";
 
 
 const initSquares = () => {
@@ -32,6 +32,7 @@ class App extends Component {
     squares: initSquares(),
     players: [{name: "Rainer", active:true, symbol:"X"}, {name: "Lotta", active:false, symbol:"0"}],
     activePlayer: {name: "Rainer", active:true, symbol:"X"},
+    previousPlayer: {name: "", active: false, symbol: ""},
     gameOver: false
 })
 
@@ -53,7 +54,7 @@ class App extends Component {
       if(player.symbol != currentPlayer.symbol)
         nextPlayer = player;
     })
-    this.setState({activePlayer:nextPlayer});
+    this.setState({activePlayer:nextPlayer, previousPlayer:currentPlayer});
   }
 
   render() {
@@ -62,11 +63,10 @@ class App extends Component {
         <h1>Tic Tac Toe for kidz</h1>
         <button onClick={this.restartGame} className={classes.button}>Spiel starten</button>
         <div className={classes.container}>
-          <SquareField nextPlayer={currentPlayer => this.nextPlayer(currentPlayer)} appState={this.state}/>
-        
-          {/* <PlayerWins gameOver={this.setGameOver} squares={this.state.squares} playerToken={this.state.activePlayer.symbol} />   */}        
+          <SquareField nextPlayer={currentPlayer => this.nextPlayer(currentPlayer)} appState={this.state}/>           
         </div>
         <Player activePlayer={this.state.activePlayer}/>
+        <Winner gameOver={this.setGameOver} appState={this.state}/> 
       </div>
     );
   }
