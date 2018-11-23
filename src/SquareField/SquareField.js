@@ -8,7 +8,7 @@ class SquareField extends React.Component {
     }
 
     componentWillUpdate(nextState, nextProps) {        
-        console.log(nextProps);
+ 
       }
 
     resetClickedSquares = (squares) => {
@@ -17,14 +17,43 @@ class SquareField extends React.Component {
             return square;
         })
         return updatedSquares;
-        }
+    }
+
+    
+    getDivPosition = () => {
+        const squareSize =  this.currentSquare.getBoundingClientRect();
+        console.log("Size: ", squareSize);
+        const canvas = document.querySelector('canvas');
+        // const testDiv = document.querySelector('.container');
+        const context = canvas.getContext('2d');
+    
+
+        context.clearRect(0,0,canvas.width,canvas.height);
+        context.beginPath();
+        context.moveTo(50, 0);
+        console.log("Bottom: ", squareSize.bottom);
+        context.lineTo(squareSize.width + 8, squareSize.bottom);
+        context.strokeStyle = "black";
+        context.shadowOffsetY = 4;
+        context.shadowBlur    = 4;
+        context.shadowColor   = "gray";
+        context.stroke();
+
+      }
 
 
     clickSquareHandler = (id) => {   
         console.log("click");
         let squares = [...this.props.appState.squares];     
+
+        if (this.currentSquare !== null) {
+            this.getDivPosition();
+
+        }
+
             
         const activePlayer = this.props.appState.activePlayer;
+ 
         
         if(squares[id].value === "")
         {
@@ -38,12 +67,11 @@ class SquareField extends React.Component {
 
 
     render() {
-        console.log("Render squarefield");
-        console.log(this.props.appState.squares);
         const squares = this.props.appState.squares;
         return ( 
             squares.map(square => {
-                return (<Square key={square.id}                       
+                return (<Square key={square.id}   
+                        reffs={(test) => this.currentSquare = test}                     
                         click={this.clickSquareHandler.bind(this, square.id)} 
                         value={square.value}/>)
                 })
